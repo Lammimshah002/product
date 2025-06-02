@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 use App\Models\Post;
+//use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class PostController extends Controller
+class PostController extends Controller 
 {
     public function create()
     {
@@ -12,26 +14,24 @@ class PostController extends Controller
     }
     public function product_store(Request $request)
     {
-        $request->validate([
+       $field= $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
-       
         $filename= null;
         if(isset($request->image))
         {
              $filename = time() . '.' . $request->image->extension();
 
-    // Move image to /public/images folder
     $request->image->move(public_path('images'), $filename);
         }
-     
-
         $post = new Post();
         $post->name = $request->name;
         $post->price = $request->price;
         $post->image =  $filename;
+        $post->user_id = $request->user()->id; 
+        
         $post->save();
 
         return redirect()->route('home')->with('success');
