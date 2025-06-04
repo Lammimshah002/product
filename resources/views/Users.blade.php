@@ -38,6 +38,7 @@
               <th class="px-6 py-3">Product Name</th>
               <th class="px-6 py-3">Price</th>
               <th class="px-6 py-3">Image</th>
+              <th class="px-6 py-3">User Name</th>
               <th class="px-6 py-3">Action</th>
             </tr>
           </thead>
@@ -50,6 +51,7 @@
                 <td class="px-6 py-4">
                   <img src="images/{{$post->image}}" width="80px" alt="{{ $post->name }}" class="w-16 h-16 object-cover rounded">
                 </td>
+                 <td class="px-6 py-4">{{ $post->user->name}}</td>
                 <td class="px-6 py-4 flex space-x-2">
                   <a href="{{route("edit",$post)}}" class="btn">Edit</a>
                   <a href="{{route("delete",$post)}}" class="btn1">Delete</a>
